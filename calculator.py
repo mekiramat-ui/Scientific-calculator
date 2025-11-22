@@ -31,12 +31,12 @@ class ScientificCalculator:
 
         buttons = [
             ('sin', 1, 0), ('cos', 1, 1), ('tan', 1, 2), ('log', 1, 3),
-            ('ln', 2, 0), ('(', 2, 1), (')', 2, 2), ('^', 2, 3),
+            ('ln', 2, 0), (')', 2, 1), ('(', 2, 2), ('^', 2, 3),
             ('sqrt', 3, 0), ('7', 3, 1), ('8', 3, 2), ('9', 3, 3),
             ('C', 4, 0), ('4', 4, 1), ('5', 4, 2), ('6', 4, 3),
             ('<-', 5, 0), ('1', 5, 1), ('2', 5, 2), ('3', 5, 3),
             ('/', 6, 0), ('*', 6, 1), ('-', 6, 2), ('+', 6, 3),
-            ('pi', 7, 0), ('e', 7, 1), ('.', 7, 2), ('=', 7, 3),
+            ('0', 7, 0), ('.', 7, 1), ('pi', 7, 2), ('=', 7, 3),
         ]
 
         for (text, row, col) in buttons:
@@ -49,7 +49,9 @@ class ScientificCalculator:
             buttons_frame.grid_columnconfigure(i, weight=1)
 
     def on_button_click(self, char):
-        if char == '=':
+        if char in ('sin', 'cos', 'tan', 'log', 'ln', 'sqrt'):
+            self.expression += f"{char}("
+        elif char == '=':
             self.calculate()
         elif char == 'C':
             self.clear()
@@ -57,7 +59,7 @@ class ScientificCalculator:
             self.backspace()
         else:
             self.expression += str(char)
-            self.input_text.set(self.expression)
+        self.input_text.set(self.expression)
 
     def calculate(self):
         try:
